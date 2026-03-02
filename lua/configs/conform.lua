@@ -16,12 +16,6 @@ local opts = {
     css = { "prettierd" },
     html = { "prettierd", "djlint" },
     markdown = { "prettierd" },
-    c = { "clang-format" },
-    cpp = { "clang-format" },
-    -- elixir
-    elixir = { "mix" },
-    eelixir = { "mix" },
-    heex = { "mix" },
   },
 
   format_on_save = {
