@@ -2,6 +2,9 @@ require "nvchad.mappings"
 
 local map = vim.keymap.set
 
+-- Exit terminal mode with Esc
+map("t", "<Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
+
 -- General mappings
 map("n", "<C-h>", "<cmd> TmuxNavigateLeft<CR>", { desc = "TMUX window left" })
 map("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>", { desc = "TMUX window right" })
@@ -40,7 +43,21 @@ map({ "n", "t" }, "<leader>tt", function()
   require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
 end, { desc = "terminal horizontal toggle" })
 
+-- Named terminals
+map({ "n", "t" }, "<leader>t1", function()
+  require("nvchad.term").toggle { pos = "sp", id = "term1" }
+end, { desc = "Terminal 1" })
 
+map({ "n", "t" }, "<leader>t2", function()
+  require("nvchad.term").toggle { pos = "sp", id = "term2" }
+end, { desc = "Terminal 2" })
+
+map({ "n", "t" }, "<leader>t3", function()
+  require("nvchad.term").toggle { pos = "vsp", id = "term3" }
+end, { desc = "Terminal 3" })
+-- Buffer navigation
+map("n", "<Tab>", "<cmd>bnext<CR>", { desc = "Next buffer" })
+map("n", "<S-Tab>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
 
 -- Gopher mappings
 map("n", "<leader>gsj", "<cmd> GoTagAdd json <CR>", { desc = "Gopher Add json struct tags" })
