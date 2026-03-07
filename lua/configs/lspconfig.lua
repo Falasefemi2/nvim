@@ -30,10 +30,17 @@ vim.lsp.config("gopls", {
   },
 })
 
-vim.lsp.config("ts_ls", {
+local has_ts_ls = pcall(vim.lsp.config, "ts_ls", {
   on_attach = on_attach,
   capabilities = capabilities,
 })
+
+if not has_ts_ls then
+  vim.lsp.config("tsserver", {
+    on_attach = on_attach,
+    capabilities = capabilities,
+  })
+end
 
 vim.lsp.config("tailwindcss", {
   on_attach = on_attach,
@@ -55,11 +62,15 @@ vim.lsp.config("emmet_language_server", {
   },
 })
 
-vim.lsp.enable({
+local servers = {
   "cssls",
   "html",
   "gopls",
-  "ts_ls",
+  has_ts_ls and "ts_ls" or "tsserver",
   "tailwindcss",
   "emmet_language_server",
-})
+}
+
+for _, server in ipairs(servers) do
+  vim.lsp.enable(server)
+end

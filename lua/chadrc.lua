@@ -4,7 +4,7 @@
 
 local options = {
   base46 = {
-    theme = "github_dark",
+    theme = "dark_horizon",
     -- transparency = true,
     hl_override = {
       NvDashAscii = {
