@@ -30,17 +30,40 @@ vim.lsp.config("gopls", {
   },
 })
 
-local has_ts_ls = pcall(vim.lsp.config, "ts_ls", {
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
 
-if not has_ts_ls then
-  vim.lsp.config("tsserver", {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  })
-end
+vim.lsp.config("ts_ls", {
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    if client:supports_method("textDocument/inlayHint") then
+      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    end
+  end,
+  capabilities = capabilities,
+  settings = {
+    typescript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+    },
+    javascript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+    },
+  },
+})
 
 vim.lsp.config("tailwindcss", {
   on_attach = on_attach,
@@ -66,7 +89,7 @@ local servers = {
   "cssls",
   "html",
   "gopls",
-  has_ts_ls and "ts_ls" or "tsserver",
+  "ts_ls",
   "tailwindcss",
   "emmet_language_server",
 }

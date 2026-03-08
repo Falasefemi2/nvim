@@ -5,6 +5,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    deactivate = function() end,
     config = function()
       require("nvchad.configs.lspconfig").defaults()
       require "configs.lspconfig"
