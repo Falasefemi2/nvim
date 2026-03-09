@@ -7,11 +7,11 @@ o.shiftwidth = 4
 vim.o.exrc = true
 vim.o.secure = true
 vim.api.nvim_create_autocmd("filetype", {
-  pattern = { "html" },
-  callback = function()
-    vim.opt_local.expandtab = true
-  end,
+    pattern = { "html" },
+    callback = function()
+        vim.opt_local.expandtab = true
+    end,
 })
 require("gitsigns").setup {
-  current_line_blame = true,
+    current_line_blame = true,
 }
