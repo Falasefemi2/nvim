@@ -4,7 +4,7 @@
 
 local options = {
     base46 = {
-        theme = "dark_horizon",
+        theme = "monekai",
         -- transparency = true,
         hl_override = {
             NvDashAscii = {
@@ -37,7 +37,7 @@ local options = {
             { txt = "  Find File", keys = "Spc f f", cmd = "Telescope find_files" },
             { txt = "  Recent Files", keys = "Spc f o", cmd = "Telescope oldfiles" },
             { txt = "󰈭  Find Word", keys = "Spc f w", cmd = "Telescope live_grep" },
-            { txt = "󱥚  Themes", keys = "Spc t h", cmd = "Telescope themes" },
+            { txt = "󱥚  Themes", keys = "Spc t h", cmd = "Telescope colorscheme" },
             { txt = "  Mappings", keys = "Spc c h", cmd = "NvCheatsheet" },
 
             { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
@@ -91,3 +91,4 @@ local options = {
 
 local status, chadrc = pcall(require, "chadrc")
 return vim.tbl_deep_extend("force", options, status and chadrc or {})
+
