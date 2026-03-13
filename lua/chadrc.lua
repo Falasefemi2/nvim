@@ -4,7 +4,7 @@
 
 local options = {
     base46 = {
-        theme = "oxocarbon",
+        theme = "tokyodark",
         -- transparency = true,
         hl_override = {
             NvDashAscii = {
@@ -34,10 +34,10 @@ local options = {
                 keys = "Spc q s",
                 cmd = 'function() require("persistence").load() end',
             },
-            { txt = "  Find File", keys = "Spc f f", cmd = 'function() require("fff").find_files() end' },
-            { txt = "  Recent Files", keys = "Spc f o", cmd = "Telescope oldfiles" },
-            { txt = "󰈭  Find Word", keys = "Spc f w", cmd = 'function() require("fff").live_grep() end' },
-            { txt = "󱥚  Themes", keys = "Spc t h", cmd = "Telescope colorscheme" },
+            { txt = "  Find File", keys = "Spc f f", cmd = 'function() require("pickers").find_files() end' },
+            { txt = "  Recent Files", keys = "Spc f o", cmd = 'function() require("pickers").oldfiles() end' },
+            { txt = "󰈭  Find Word", keys = "Spc f w", cmd = 'function() require("pickers").live_grep() end' },
+            { txt = "󱥚  Themes", keys = "Spc t h", cmd = 'function() require("pickers").themes() end' },
             { txt = "  Mappings", keys = "Spc c h", cmd = "NvCheatsheet" },
 
             { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
@@ -91,6 +91,9 @@ local options = {
 
 local status, chadrc = pcall(require, "chadrc")
 return vim.tbl_deep_extend("force", options, status and chadrc or {})
+
+
+
 
 
 

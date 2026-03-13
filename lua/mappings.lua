@@ -1,6 +1,7 @@
 require "nvchad.mappings"
 
 local map = vim.keymap.set
+local pickers = require "pickers"
 
 -- Exit terminal mode with Esc
 map("t", "<Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
@@ -79,6 +80,20 @@ end, { desc = "Persistence Don't Save Current Session" })
 map("n", "<leader>lf", function()
   vim.diagnostic.open_float { border = "rounded" }
 end, { desc = "LSP Floating diagnostic" })
+
+-- Picker overrides (replace telescope defaults)
+map("n", "<leader>ff", pickers.find_files, { desc = "FFF find files" })
+map("n", "<leader>fa", pickers.find_all_files, { desc = "FFF find all files" })
+map("n", "<leader>fw", pickers.live_grep, { desc = "FFF live grep" })
+map("n", "<leader>fb", pickers.buffers, { desc = "Pick buffers" })
+map("n", "<leader>fh", pickers.help_tags, { desc = "Pick help tags" })
+map("n", "<leader>fo", pickers.oldfiles, { desc = "Pick oldfiles" })
+map("n", "<leader>fz", pickers.current_buffer_find, { desc = "Search in current buffer" })
+map("n", "<leader>ma", pickers.marks, { desc = "Pick marks" })
+map("n", "<leader>cm", pickers.git_commits, { desc = "Pick git commits" })
+map("n", "<leader>gt", pickers.git_status, { desc = "Pick git status" })
+map("n", "<leader>pt", pickers.terms, { desc = "Pick terminals" })
+map("n", "<leader>th", pickers.themes, { desc = "Pick themes" })
 
 -- gitsigns mappings
 map("n", "<leader>ph", "<cmd>Gitsigns preview_hunk<CR>", { desc = "Gitsigns Git preview hunk" })
