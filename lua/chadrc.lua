@@ -4,7 +4,7 @@
 
 local options = {
     base46 = {
-        theme = "tokyodark",
+        theme = "aura-dark",
         -- transparency = true,
         hl_override = {
             NvDashAscii = {
