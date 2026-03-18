@@ -238,9 +238,34 @@ M.terms = function()
 end
 
 M.themes = function()
-  local themes = safe_require("nvchad.themes")
-  if not themes then return end
-  themes.open()
+  local colors = vim.fn.getcompletion("", "color")
+  local items = {}
+  local seen = {}
+  local current = vim.g.colors_name
+
+  for _, color in ipairs(colors) do
+    if color ~= "" and not seen[color] then
+      seen[color] = true
+      table.insert(items, {
+        name = color,
+        display = color == current and (color .. " [current]") or color,
+      })
+    end
+  end
+
+  table.sort(items, function(a, b)
+    return a.name < b.name
+  end)
+
+  select(items, {
+    prompt = "Themes",
+    format_item = function(item) return item.display end,
+  }, function(item)
+    local ok, err = pcall(vim.cmd.colorscheme, item.name)
+    if not ok then
+      notify("Failed to load colorscheme " .. item.name .. ": " .. err, vim.log.levels.ERROR)
+    end
+  end)
 end
 
 return M

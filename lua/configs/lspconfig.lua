@@ -32,34 +32,29 @@ vim.lsp.config("gopls", {
 
 
 vim.lsp.config("ts_ls", {
-    on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-        if client:supports_method("textDocument/inlayHint") then
-            -- vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-        end
-    end,
+    on_attach = on_attach,
     capabilities = capabilities,
     settings = {
         typescript = {
             inlayHints = {
                 includeInlayParameterNameHints = "none",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = false,
+                includeInlayVariableTypeHints = false,
+                includeInlayPropertyDeclarationTypeHints = false,
+                includeInlayFunctionLikeReturnTypeHints = false,
+                includeInlayEnumMemberValueHints = false,
             },
         },
         javascript = {
             inlayHints = {
                 includeInlayParameterNameHints = "none",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = false,
+                includeInlayVariableTypeHints = false,
+                includeInlayPropertyDeclarationTypeHints = false,
+                includeInlayFunctionLikeReturnTypeHints = false,
+                includeInlayEnumMemberValueHints = false,
             },
         },
     },
