@@ -32,12 +32,12 @@ local options = {
             {
                 txt = "  Restore Session",
                 keys = "Spc q s",
-                cmd = 'function() require("persistence").load() end',
+                cmd = "lua require('persistence').load() end",
             },
-            { txt = "  Find File", keys = "Spc f f", cmd = 'function() require("pickers").find_files() end' },
-            { txt = "  Recent Files", keys = "Spc f o", cmd = 'function() require("pickers").oldfiles() end' },
-            { txt = "󰈭  Find Word", keys = "Spc f w", cmd = 'function() require("pickers").live_grep() end' },
-            { txt = "󱥚  Themes", keys = "Spc t h", cmd = 'function() require("pickers").themes() end' },
+            { txt = "  Find File", keys = "Spc f f", cmd = "lua require('pickers').find_files() end" },
+            { txt = "  Recent Files", keys = "Spc f o", cmd = "lua require('pickers').oldfiles() end" },
+            { txt = "󰈭  Find Word", keys = "Spc f w", cmd = "lua require('pickers').live_grep() end" },
+            { txt = "󱥚  Themes", keys = "Spc t h", cmd = "lua require('pickers').themes() end" },
             { txt = "  Mappings", keys = "Spc c h", cmd = "NvCheatsheet" },
 
             { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
@@ -91,9 +91,3 @@ local options = {
 
 local status, chadrc = pcall(require, "chadrc")
 return vim.tbl_deep_extend("force", options, status and chadrc or {})
-
-
-
-
-
-

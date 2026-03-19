@@ -261,8 +261,12 @@ M.themes = function()
     prompt = "Themes",
     format_item = function(item) return item.display end,
   }, function(item)
+    local previous = vim.g.colors_name
     local ok, err = pcall(vim.cmd.colorscheme, item.name)
     if not ok then
+      if previous and previous ~= "" and previous ~= item.name then
+        pcall(vim.cmd.colorscheme, previous)
+      end
       notify("Failed to load colorscheme " .. item.name .. ": " .. err, vim.log.levels.ERROR)
     end
   end)
