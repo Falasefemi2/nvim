@@ -233,15 +233,23 @@ M.terms = function()
   }, function(item)
     if vim.api.nvim_buf_is_valid(item.buf) then
       vim.api.nvim_set_current_buf(item.buf)
+      vim.cmd "startinsert"
     end
   end)
 end
 
 M.themes = function()
-  local colors = vim.fn.getcompletion("", "color")
+  local ok, nvchad_themes = pcall(require, "nvchad.themes")
+  if ok and type(nvchad_themes.open) == "function" then
+    nvchad_themes.open()
+    return
+  end
+
+  local ok_utils, nvchad_utils = pcall(require, "nvchad.utils")
+  local colors = ok_utils and nvchad_utils.list_themes() or vim.fn.getcompletion("", "color")
   local items = {}
   local seen = {}
-  local current = vim.g.colors_name
+  local current = require("nvconfig").base46.theme or vim.g.colors_name
 
   for _, color in ipairs(colors) do
     if color ~= "" and not seen[color] then
@@ -261,11 +269,28 @@ M.themes = function()
     prompt = "Themes",
     format_item = function(item) return item.display end,
   }, function(item)
-    local previous = vim.g.colors_name
-    local ok, err = pcall(vim.cmd.colorscheme, item.name)
-    if not ok then
+    local previous = require("nvconfig").base46.theme or vim.g.colors_name
+    local ok_apply, err = pcall(function()
+      if ok_utils then
+        require("nvconfig").base46.theme = item.name
+        require("base46").load_all_highlights()
+        package.loaded.chadrc = nil
+        local old_theme = require("chadrc").base46.theme
+        nvchad_utils.replace_word('theme = "' .. old_theme, 'theme = "' .. item.name)
+      else
+        vim.cmd.colorscheme(item.name)
+      end
+    end)
+    if not ok_apply then
       if previous and previous ~= "" and previous ~= item.name then
-        pcall(vim.cmd.colorscheme, previous)
+        if ok_utils then
+          pcall(function()
+            require("nvconfig").base46.theme = previous
+            require("base46").load_all_highlights()
+          end)
+        else
+          pcall(vim.cmd.colorscheme, previous)
+        end
       end
       notify("Failed to load colorscheme " .. item.name .. ": " .. err, vim.log.levels.ERROR)
     end

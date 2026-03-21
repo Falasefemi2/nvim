@@ -36,26 +36,9 @@ map("n", "<leader>dgl", function()
   require("dap-go").debug_last()
 end, { desc = "DAP Debug last go test" })
 
-map({ "n", "t" }, "<leader>tv", function()
-  require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
-end, { desc = "terminal vertical toggle" })
-
-map({ "n", "t" }, "<leader>tt", function()
-  require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
-end, { desc = "terminal horizontal toggle" })
-
--- Named terminals
-map({ "n", "t" }, "<leader>t1", function()
-  require("nvchad.term").toggle { pos = "sp", id = "term1" }
-end, { desc = "Terminal 1" })
-
-map({ "n", "t" }, "<leader>t2", function()
-  require("nvchad.term").toggle { pos = "sp", id = "term2" }
-end, { desc = "Terminal 2" })
-
-map({ "n", "t" }, "<leader>t3", function()
-  require("nvchad.term").toggle { pos = "vsp", id = "term3" }
-end, { desc = "Terminal 3" })
+map({ "n", "t" }, "<leader>t1", "<cmd>STerm<CR>", { desc = "Terminal toggle" })
+map({ "n", "t" }, "<leader>t2", "<cmd>Sterm<CR>", { desc = "Terminal new split" })
+map({ "n", "t" }, "<leader>t3", "<cmd>Vterm<CR>", { desc = "Terminal new vertical" })
 -- Buffer navigation
 map("n", "<Tab>", "<cmd>bnext<CR>", { desc = "Next buffer" })
 map("n", "<S-Tab>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
@@ -93,6 +76,7 @@ map("n", "<leader>ma", pickers.marks, { desc = "Pick marks" })
 map("n", "<leader>cm", pickers.git_commits, { desc = "Pick git commits" })
 map("n", "<leader>gt", pickers.git_status, { desc = "Pick git status" })
 map("n", "<leader>pt", pickers.terms, { desc = "Pick terminals" })
+map("n", "<leader>to", pickers.terms, { desc = "Open terminal picker" })
 map("n", "<leader>th", pickers.themes, { desc = "Pick themes" })
 
 -- gitsigns mappings
