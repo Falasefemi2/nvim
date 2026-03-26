@@ -34,6 +34,14 @@ vim.lsp.config("gopls", {
 vim.lsp.config("ts_ls", {
     on_attach = on_attach,
     capabilities = capabilities,
+    init_options = {
+        plugins = {
+            {
+                name = "@effect/language-service",
+                location = vim.fn.getcwd() .. "\\node_modules\\@effect\\language-service"
+            }
+        }
+    },
     settings = {
         typescript = {
             inlayHints = {

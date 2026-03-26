@@ -4,7 +4,7 @@
 
 local options = {
     base46 = {
-        theme = "cyberpunk-neon",
+        theme = "cyberpunk-night",
         -- transparency = true,
         hl_override = {
             NvDashAscii = {
