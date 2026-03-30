@@ -1,22 +1,57 @@
 return {
     {
         "mfussenegger/nvim-dap",
+        lazy = false,
+        keys = {
+            { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
+            { "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
+            { "<leader>dx", function() require("dap").terminate() end, desc = "Terminate" },
+            { "<leader>ds", function() require("dap").step_over() end, desc = "Step Over" },
+            { "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
+            { "<leader>do", function() require("dap").step_out() end, desc = "Step Out" },
+        },
+        config = function()
+            vim.fn.sign_define("DapBreakpoint", { text = "B", texthl = "DapBreakpoint" })
+            vim.fn.sign_define("DapStopped", { text = ">", texthl = "DapStopped", linehl = "DapStopped" })
+        end,
+    },
+    {
+        "nvim-neotest/nvim-nio",
+        lazy = false,
+    },
+    {
+        "rcarriga/nvim-dap-ui",
+        lazy = false,
         dependencies = {
-            "rcarriga/nvim-dap-ui",
+            "mfussenegger/nvim-dap",
             "nvim-neotest/nvim-nio",
+        },
+        keys = {
+            {
+                "<leader>du",
+                function()
+                    local ok, dapui = pcall(require, "dapui")
+                    if ok then
+                        dapui.toggle()
+                    else
+                        vim.notify("nvim-dap-ui is unavailable: " .. dapui, vim.log.levels.WARN)
+                    end
+                end,
+                desc = "Toggle DAP UI",
+            },
         },
         config = function()
             local dap = require "dap"
-            local dapui = require "dapui"
+            local ok, dapui = pcall(require, "dapui")
+            if not ok then
+                vim.schedule(function()
+                    vim.notify("Skipping nvim-dap-ui setup: " .. dapui, vim.log.levels.WARN)
+                end)
+                return
+            end
 
-            -- Signs
-            vim.fn.sign_define("DapBreakpoint", { text = "🔴", texthl = "DapBreakpoint" })
-            vim.fn.sign_define("DapStopped", { text = "▶️", texthl = "DapStopped", linehl = "DapStopped" })
-
-            -- UI setup
             dapui.setup()
 
-            -- Auto open/close UI
             dap.listeners.after.event_initialized["dapui_config"] = function()
                 dapui.open()
             end
@@ -27,20 +62,13 @@ return {
                 dapui.close()
             end
         end,
-        keys = {
-            { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
-            { "<leader>dc", function() require("dap").continue() end,          desc = "Continue" },
-            { "<leader>dx", function() require("dap").terminate() end,         desc = "Terminate" },
-            { "<leader>ds", function() require("dap").step_over() end,         desc = "Step Over" },
-            { "<leader>di", function() require("dap").step_into() end,         desc = "Step Into" },
-            { "<leader>do", function() require("dap").step_out() end,          desc = "Step Out" },
-            { "<leader>du", function() require("dapui").toggle() end,          desc = "Toggle DAP UI" },
-        },
     },
     {
         "leoluz/nvim-dap-go",
-        lazy = false,
-        dependencies = "mfussenegger/nvim-dap",
+        ft = "go",
+        dependencies = {
+            "mfussenegger/nvim-dap",
+        },
         config = function()
             require("dap-go").setup {
                 delve = {
@@ -51,7 +79,7 @@ return {
             }
         end,
         keys = {
-            { "<leader>dt", function() require("dap-go").debug_test() end,      desc = "Debug Nearest Test (Go)" },
+            { "<leader>dt", function() require("dap-go").debug_test() end, desc = "Debug Nearest Test (Go)" },
             { "<leader>dT", function() require("dap-go").debug_last_test() end, desc = "Debug Last Test (Go)" },
         },
     },
