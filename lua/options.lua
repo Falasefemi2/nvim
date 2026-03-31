@@ -12,6 +12,3 @@ vim.api.nvim_create_autocmd("filetype", {
         vim.opt_local.expandtab = true
     end,
 })
-require("gitsigns").setup {
-    current_line_blame = true,
-}

@@ -50,11 +50,33 @@ return {
         },
         config = function()
             local internal = require "nvim-ts-autotag.internal"
+            local close_tag = internal.close_tag
+            local close_slash_tag = internal.close_slash_tag
             local rename_tag = internal.rename_tag
 
-            internal.rename_tag = function(...)
+            local function has_parser()
                 local ok, parser = pcall(vim.treesitter.get_parser)
-                if not ok or not parser then
+                return ok and parser ~= nil
+            end
+
+            internal.close_tag = function(...)
+                if not has_parser() then
+                    return
+                end
+
+                return close_tag(...)
+            end
+
+            internal.close_slash_tag = function(...)
+                if not has_parser() then
+                    return
+                end
+
+                return close_slash_tag(...)
+            end
+
+            internal.rename_tag = function(...)
+                if not has_parser() then
                     return
                 end
 

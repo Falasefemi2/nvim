@@ -20,39 +20,38 @@ local options = {
     nvdash = {
         load_on_startup = true,
         header = {
-            [[    ██╗   ██╗███████╗ ██████╗ ██████╗ ██████╗ ███████╗ ]],
-            [[    ██║   ██║██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔════╝ ]],
-            [[    ██║   ██║███████╗██║     ██║   ██║██║  ██║█████╗   ]],
-            [[    ╚██╗ ██╔╝╚════██║██║     ██║   ██║██║  ██║██╔══╝   ]],
-            [[     ╚████╔╝ ███████║╚██████╗╚██████╔╝██████╔╝███████╗ ]],
-            [[      ╚═══╝  ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝ ]],
-            [[                                                       ]],
+            [[ _   _ _   _ ___ __  __ ]],
+            [[| \ | | | | |_ _|  \/  |]],
+            [[|  \| | | | || || |\/| |]],
+            [[| |\  | |_| || || |  | |]],
+            [[|_| \_|\___/|___|_|  |_|]],
+            [[                         ]],
         },
         buttons = {
             {
-                txt = "  Restore Session",
+                txt = "Restore Session",
                 keys = "Spc q s",
-                cmd = "lua require('persistence').load() end",
+                cmd = "lua require('persistence').load()",
             },
-            { txt = "  Find File", keys = "Spc f f", cmd = "lua require('pickers').find_files() end" },
-            { txt = "  Recent Files", keys = "Spc f o", cmd = "lua require('pickers').oldfiles() end" },
-            { txt = "󰈭  Find Word", keys = "Spc f w", cmd = "lua require('pickers').live_grep() end" },
-            { txt = "󱥚  Themes", keys = "Spc t h", cmd = "lua require('pickers').themes() end" },
-            { txt = "  Mappings", keys = "Spc c h", cmd = "NvCheatsheet" },
+            { txt = "Find File", keys = "Spc f f", cmd = "lua require('pickers').find_files()" },
+            { txt = "Recent Files", keys = "Spc f o", cmd = "lua require('pickers').oldfiles()" },
+            { txt = "Find Word", keys = "Spc f w", cmd = "lua require('pickers').live_grep()" },
+            { txt = "Themes", keys = "Spc t h", cmd = "lua require('pickers').themes()" },
+            { txt = "Mappings", keys = "Spc c h", cmd = "NvCheatsheet" },
 
-            { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
+            { txt = "-", hl = "NvDashLazy", no_gap = true, rep = true },
 
             {
                 txt = function()
                     local stats = require("lazy").stats()
                     local ms = math.floor(stats.startuptime) .. " ms"
-                    return "  Loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms
+                    return "Loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms
                 end,
                 hl = "NvDashLazy",
                 no_gap = true,
             },
 
-            { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
+            { txt = "-", hl = "NvDashLazy", no_gap = true, rep = true },
         },
     },
     mason = {
@@ -89,5 +88,4 @@ local options = {
     },
 }
 
-local status, chadrc = pcall(require, "chadrc")
-return vim.tbl_deep_extend("force", options, status and chadrc or {})
+return options
