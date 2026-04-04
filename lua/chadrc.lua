@@ -4,7 +4,7 @@
 
 local options = {
     base46 = {
-        theme = "cyberpunk",
+        theme = "sora",
         -- transparency = true,
         hl_override = {
             NvDashAscii = {
@@ -76,6 +76,7 @@ local options = {
             "prettierd",
             "tailwindcss-language-server",
             "typescript-language-server",
+            "postgres-language-server",
             -- markdown
             "marksman",
             -- C/CPP stuff

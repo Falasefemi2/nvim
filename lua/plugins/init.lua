@@ -36,8 +36,46 @@ return {
                 "typescript",
                 "tsx",
                 "go",
+                "sql",
             }
             return opts
+        end,
+    },
+    {
+        "jmbuhr/otter.nvim",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+        },
+        ft = {
+            "javascript",
+            "javascriptreact",
+            "typescript",
+            "typescriptreact",
+        },
+        opts = {},
+        config = function(_, opts)
+            local otter = require "otter"
+
+            otter.setup(opts)
+
+            local group = vim.api.nvim_create_augroup("embedded_sql_otter", { clear = true })
+
+            vim.api.nvim_create_autocmd("FileType", {
+                group = group,
+                pattern = {
+                    "javascript",
+                    "javascriptreact",
+                    "typescript",
+                    "typescriptreact",
+                },
+                callback = function(args)
+                    vim.schedule(function()
+                        if vim.api.nvim_buf_is_valid(args.buf) then
+                            otter.activate({ "sql" }, true, true)
+                        end
+                    end)
+                end,
+            })
         end,
     },
     {
