@@ -16,6 +16,106 @@ return {
         end,
     },
     {
+        "mxsdev/nvim-dap-vscode-js",
+        ft = {
+            "javascript",
+            "javascriptreact",
+            "typescript",
+            "typescriptreact",
+        },
+        dependencies = {
+            "mfussenegger/nvim-dap",
+        },
+        config = function()
+            local dap = require "dap"
+            local mason_packages = vim.fs.joinpath(vim.fn.stdpath "data", "mason", "packages")
+            local debugger_path = vim.fs.joinpath(mason_packages, "js-debug-adapter", "js-debug", "src", "dapDebugServer.js")
+
+            require("dap-vscode-js").setup {
+                debugger_path = debugger_path,
+                adapters = {
+                    "pwa-node",
+                    "pwa-chrome",
+                    "pwa-msedge",
+                    "node-terminal",
+                },
+            }
+
+            local js_filetypes = {
+                "javascript",
+                "javascriptreact",
+                "typescript",
+                "typescriptreact",
+            }
+
+            local js_configurations = {
+                {
+                    type = "pwa-node",
+                    request = "launch",
+                    name = "Launch current file",
+                    program = "${file}",
+                    cwd = "${workspaceFolder}",
+                    sourceMaps = true,
+                    resolveSourceMapLocations = {
+                        "${workspaceFolder}/**",
+                        "!**/node_modules/**",
+                    },
+                    skipFiles = {
+                        "<node_internals>/**",
+                        "${workspaceFolder}/node_modules/**",
+                    },
+                    console = "integratedTerminal",
+                },
+                {
+                    type = "pwa-node",
+                    request = "launch",
+                    name = "Launch current file with ts-node",
+                    program = "${file}",
+                    cwd = "${workspaceFolder}",
+                    runtimeExecutable = "node",
+                    runtimeArgs = {
+                        "--loader",
+                        "ts-node/esm",
+                    },
+                    sourceMaps = true,
+                    resolveSourceMapLocations = {
+                        "${workspaceFolder}/**",
+                        "!**/node_modules/**",
+                    },
+                    skipFiles = {
+                        "<node_internals>/**",
+                        "${workspaceFolder}/node_modules/**",
+                    },
+                    console = "integratedTerminal",
+                },
+                {
+                    type = "pwa-node",
+                    request = "attach",
+                    name = "Attach to process",
+                    processId = require("dap.utils").pick_process,
+                    cwd = "${workspaceFolder}",
+                    skipFiles = {
+                        "<node_internals>/**",
+                        "${workspaceFolder}/node_modules/**",
+                    },
+                },
+                {
+                    type = "pwa-chrome",
+                    request = "launch",
+                    name = "Launch Chrome against localhost",
+                    url = "http://localhost:3000",
+                    webRoot = "${workspaceFolder}",
+                    sourceMaps = true,
+                    protocol = "inspector",
+                },
+            }
+
+            for _, language in ipairs(js_filetypes) do
+                dap.configurations[language] = js_configurations
+            end
+        end,
+    },
+    {
         "nvim-neotest/nvim-nio",
         lazy = false,
     },

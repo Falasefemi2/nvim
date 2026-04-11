@@ -4,7 +4,7 @@
 
 local options = {
     base46 = {
-        theme = "sora",
+        theme = "tokyonight",
         -- transparency = true,
         hl_override = {
             NvDashAscii = {
@@ -76,6 +76,7 @@ local options = {
             "prettierd",
             "tailwindcss-language-server",
             "typescript-language-server",
+            "js-debug-adapter",
             "postgres-language-server",
             -- markdown
             "marksman",
