@@ -15,16 +15,6 @@ return {
         "williamboman/mason.nvim",
     },
     {
-        "olexsmir/gopher.nvim",
-        ft = "go",
-        config = function(_, opts)
-            require("gopher").setup(opts)
-        end,
-        build = function()
-            vim.cmd [[silent! GoInstallDeps]]
-        end,
-    },
-    {
         "nvim-treesitter/nvim-treesitter",
         opts = function()
             local opts = require "nvchad.configs.treesitter"

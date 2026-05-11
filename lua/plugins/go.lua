@@ -1,7 +1,14 @@
 return {
     {
         "olexsmir/gopher.nvim",
+        ft = "go",
         opts = {},
+        config = function(_, opts)
+            require("gopher").setup(opts)
+        end,
+        build = function()
+            vim.cmd [[silent! GoInstallDeps]]
+        end,
     },
     {
         "ray-x/go.nvim",
