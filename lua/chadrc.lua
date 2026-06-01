@@ -4,7 +4,7 @@
 
 local options = {
     base46 = {
-        theme = "monekai",
+        theme = "tokyonight",
         -- transparency = true,
         hl_override = {
             NvDashAscii = {
