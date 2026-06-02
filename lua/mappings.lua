@@ -144,9 +144,9 @@ vim.keymap.set("n", "<leader>cf", function()
     vim.fn.writefile({}, output_file)
   end
 
-  vim.cmd("edit " .. main_file)
-  vim.cmd("vsplit " .. input_file)
-  vim.cmd("split " .. output_file)
+  vim.cmd.edit(vim.fn.fnameescape(main_file))
+  vim.cmd.vsplit(vim.fn.fnameescape(input_file))
+  vim.cmd.split(vim.fn.fnameescape(output_file))
   vim.cmd "wincmd h"
 end, { desc = "Create new C++ problem folder with template and tests" })
 

@@ -10,8 +10,8 @@ return {
         -- build = "nix run .#release",
         opts = {                    -- (optional)
             debug = {
-                enabled = true,     -- we expect your collaboration at least during the beta
-                show_scores = true, -- to help us optimize the scoring system, feel free to share your scores!
+                enabled = false,
+                show_scores = false,
             },
         },
         -- No need to lazy-load with lazy.nvim.

@@ -1,6 +1,4 @@
-local conform = require "conform"
-
-local opts = {
+return {
   formatters_by_ft = {
     -- go stuff
     go = { "gofumpt", "goimports_reviser", "golines" },
@@ -9,30 +7,18 @@ local opts = {
       "black",
     },
     -- web dev stuff
-    javascript = { "prettierd" },
-    javascriptreact = { "prettierd" },
-    typescript = { "prettierd" },
-    typescriptreact = { "prettierd" },
-    css = { "prettierd" },
-    html = { "prettierd", "djlint" },
-    markdown = { "prettierd" },
+    javascript = { "prettierd", "prettier", stop_after_first = true },
+    javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+    typescript = { "prettierd", "prettier", stop_after_first = true },
+    typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+    css = { "prettierd", "prettier", stop_after_first = true },
+    html = { "prettierd", "prettier", "djlint", stop_after_first = true },
+    markdown = { "prettierd", "prettier", stop_after_first = true },
   },
 
   format_on_save = {
     -- Enable format on save
     timeout_ms = 500,
-    lsp_fallback = true,
+    lsp_format = "fallback",
   },
 }
-
-conform.setup(opts)
-
--- Automatically format on save for any buffer that supports formatting
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function(args)
-    conform.format { bufnr = args.buf }
-  end,
-})
-
-return opts

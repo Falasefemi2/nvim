@@ -1,19 +1,67 @@
 return {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
-    lazy = false,
     dependencies = {
         "nvim-lua/plenary.nvim",
     },
-    config = true,
+    opts = {},
     keys = {
-        { "<leader>hm", "<cmd>lua require('harpoon.mark').add_file()<cr>",        desc = "Mark file with harpoon" },
-        { "<leader>hr", "<cmd>lua require('harpoon.mark').rm_file()<cr>",         desc = "Remove file with harpoon" },
-        { "<leader>hn", "<cmd>lua require('harpoon.ui').nav_next()<cr>",          desc = "Go to next harpoon mark" },
-        { "<leader>hp", "<cmd>lua require('harpoon.ui').nav_prev()<cr>",          desc = "Go to previous harpoon mark" },
-        { "<leader>ha", "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", desc = "Show harpoon marks" },
-        { "<leader>h1", "<cmd> lua require('harpoon.ui').nav_file(1)<cr>",        desc = "Harpoon first file" },
-        { "<leader>h2", "<cmd> lua require('harpoon.ui').nav_file(2)<cr>",        desc = "Harpoon second file" },
-        { "<leader>h3", "<cmd> lua require('harpoon.ui').nav_file(3)<cr>",        desc = "Harpoon third file" },
+        {
+            "<leader>hm",
+            function()
+                require("harpoon"):list():add()
+            end,
+            desc = "Mark file with harpoon",
+        },
+        {
+            "<leader>hr",
+            function()
+                require("harpoon"):list():remove()
+            end,
+            desc = "Remove file with harpoon",
+        },
+        {
+            "<leader>hn",
+            function()
+                require("harpoon"):list():next()
+            end,
+            desc = "Go to next harpoon mark",
+        },
+        {
+            "<leader>hp",
+            function()
+                require("harpoon"):list():prev()
+            end,
+            desc = "Go to previous harpoon mark",
+        },
+        {
+            "<leader>ha",
+            function()
+                local harpoon = require "harpoon"
+                harpoon.ui:toggle_quick_menu(harpoon:list())
+            end,
+            desc = "Show harpoon marks",
+        },
+        {
+            "<leader>h1",
+            function()
+                require("harpoon"):list():select(1)
+            end,
+            desc = "Harpoon first file",
+        },
+        {
+            "<leader>h2",
+            function()
+                require("harpoon"):list():select(2)
+            end,
+            desc = "Harpoon second file",
+        },
+        {
+            "<leader>h3",
+            function()
+                require("harpoon"):list():select(3)
+            end,
+            desc = "Harpoon third file",
+        },
     },
 }

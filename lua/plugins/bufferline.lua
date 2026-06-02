@@ -17,22 +17,24 @@ return {
         },
         opts = {
             options = {
-                -- stylua: ignore
-                close_command = function(n) Snacks.bufdelete(n) end,
-                -- stylua: ignore
-                right_mouse_command = function(n) Snacks.bufdelete(n) end,
+                close_command = function(n)
+                    require("snacks").bufdelete(n)
+                end,
+                right_mouse_command = function(n)
+                    require("snacks").bufdelete(n)
+                end,
                 diagnostics = "nvim_lsp",
                 always_show_bufferline = false,
                 diagnostics_indicator = function(_, _, diag)
-                    local icons = LazyVim.config.icons.diagnostics
+                    local icons = { Error = "E", Warn = "W" }
                     local ret = (diag.error and icons.Error .. diag.error .. " " or "")
                         .. (diag.warning and icons.Warn .. diag.warning or "")
                     return vim.trim(ret)
                 end,
                 offsets = {
                     {
-                        filetype = "neo-tree",
-                        text = "Neo-tree",
+                        filetype = "NvimTree",
+                        text = "NvimTree",
                         highlight = "Directory",
                         text_align = "left",
                     },
@@ -42,7 +44,13 @@ return {
                 },
                 ---@param opts bufferline.IconFetcherOpts
                 get_element_icon = function(opts)
-                    return LazyVim.config.icons.ft[opts.filetype]
+                    local ok, devicons = pcall(require, "nvim-web-devicons")
+                    if not ok then
+                        return nil
+                    end
+
+                    local icon = devicons.get_icon(opts.path, opts.extension, { default = true })
+                    return icon
                 end,
             },
         },
@@ -52,7 +60,7 @@ return {
             vim.api.nvim_create_autocmd({ "BufAdd", "BufDelete" }, {
                 callback = function()
                     vim.schedule(function()
-                        pcall(nvim_bufferline)
+                        pcall(vim.cmd.BufferLineRefresh)
                     end)
                 end,
             })
